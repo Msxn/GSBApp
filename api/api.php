@@ -29,18 +29,11 @@ elseif($_GET["mode"] == 'saisie'){
     //
     unset($fetch_r);
     //
-    $q2 = 'SELECT * FROM LigneFraisHorsForfait WHERE mois = "'.date("Y").date("m").'" AND idVisiteur = (SELECT id FROM Visiteur WHERE login = "'.$user.'")';
-    $r2 = mysqli_query($connect, $q);
-    for($i = 0; $temp = mysqli_fetch_assoc($r2); $i++){
-        $fetch_r[$i] = $temp;
-    }
-    $jsonarray["horsforfait"] = $fetch_r;
-    //
-    //
+    
     if($jsonarray["forfait"]  != NULL){
         echo json_encode($jsonarray);
     }else{
-        echo "None";
+        echo "none";
     }
 }
 
@@ -127,12 +120,43 @@ elseif($_GET['mode'] == 'consult'){
 
     $usercode = $usercode['id'];
     
-    $q = "SELECT * FROM LigneFraisForfait WHERE mois LIKE '%".date("Y").date("m")."%' AND user = '$usercode';";
-    //mysqli_query($connect, $q);
-    echo $q;
-    $q = "SELECT * FROM LigneFraisHorsForfait WHERE date LIKE '%".date("Y")."-".date("m")."%' AND user = '$usercode';";
-    //mysqli_query($connect, $q);
-    echo $q;
+    $q = "SELECT * FROM LigneFraisForfait WHERE mois LIKE '%".date("Y").date("m")."%' AND idVisiteur = '$usercode';";
+    $r = mysqli_query($connect, $q);
+    while($temp = mysqli_fetch_assoc($r)){
+        $key = $temp['idFraisForfait'];
+        $fetch_r[$key] = $temp;
+    }
+    $jsonarray["forfait"] = $fetch_r;
+
+    unset($fetch_r);
+    unset($temp);
+
+    $q2 = "SELECT * FROM LigneFraisHorsForfait WHERE mois LIKE '%".date("Y").date("m")."%' AND idVisiteur = '$usercode';";
+    $r2 = mysqli_query($connect, $q2);
+    while($temp2 = mysqli_fetch_assoc($r2)){
+        $fetch_r2[$key] = $temp2;
+    }
+    $jsonarray["horsforfait"] = $fetch_r2;
+
+    $q3 = mysqli_fetch_assoc(mysqli_query($connect, "SELECT idEtat FROM FicheFrais WHERE mois LIKE '%".date("Y").date("m")."%' AND idVisiteur = '$usercode';"));
+    //var_dump($q3['idEtat']);
+
+    $q4 = mysqli_fetch_all(mysqli_query($connect, "SELECT montant FROM LigneFraisHorsForfait WHERE mois LIKE '%".date("Y").date("m")."%' AND idVisiteur = '$usercode';"));
+
+    foreach($q4 as $line){
+        $total += $line['0'];
+    }
+
+    $jsonarray['etat'] = $q3['idEtat'];
+    $jsonarray['horsforfaittotal'] = $total;
+
+    if($jsonarray["forfait"]  != NULL){
+        echo json_encode($jsonarray);
+    }else{
+        echo "none";
+    }
+    //var_dump($jsonarray['horsforfait']);
+    //echo $q.'<br>'.$q2;
 }
 
 

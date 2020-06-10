@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="MOIS"
+            android:id="@+id/month"
             android:gravity="center"
             android:textSize="36dp"/>
 
@@ -32,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fiche frais du "
+            android:id="@+id/title"
             android:textSize="22dp"/>
 
         <TextView
@@ -59,15 +61,54 @@
             android:id="@+id/REP"
             android:textSize="16dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TOTAL"
+            android:id="@+id/total"
+            android:layout_gravity="center"
+            android:layout_marginTop="30px"
+            android:textSize="32dp"/>
+
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Montant total hors-forfait"
-            android:layout_marginTop="50px"
-            android:id="@+id/horsforfait"
-            android:textSize="18dp"/>
+            android:text="Etat de la fiche de frais : "
+            android:id="@+id/etat"
+            android:layout_marginTop="30px"
+            android:textSize="16dp"/>
 
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Montant total hors-forfait"
+        android:layout_marginTop="50px"
+        android:id="@+id/horsforfait"
+        android:textSize="18dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CL : Saisie clotûrée"
+            android:layout_marginTop="50px"
+            android:textSize="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CR : Fiche créée, saisie en cours"
+            android:textSize="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RB : Remboursée"
+            android:textSize="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VA : Validée et mise en paiement"
+            android:textSize="12dp"/>
 
 
     </LinearLayout>
